@@ -1,0 +1,241 @@
+{% extends 'base.html' %}
+{% load  static %}
+{% block content %}
+    <!-- Home section -->
+    <section id="#" class="Home">
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{% static 'images/s4.jpg' %}" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>testing </h5>
+                    <p>Some representative placeholder content for the first slide.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{% static './images/s5.jpg' %}" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Second slide label</h5>
+                    <p>Some representative placeholder content for the second slide.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{% static './images/s6.jpg' %}" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Third slide label</h5>
+                    <p>Some representative placeholder content for the third slide.</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    </section>
+    <!-- Featured section -->
+    <section id="Features" class="Features">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="headline text-center mb-5">
+                        <h2 class="pb-3 position-relative d-inline-block">What We Provide</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-lg-4">
+                    <a href="#Featured" class="d-block text-center mb-4">
+                        <div class="product-list">
+                            <div class="product-image position-relative">
+                                <img src="{% static 'images/f1.jpg' %}" alt="products"
+                                     class="img-fluid product-image-first">
+                            </div>
+                            <div class="product-name pt-3">
+                                <h3 class="text-capitalize">Dog Foods</h3>
+                                <button type="button" href="{% url 'products' %}">Shop Now</button>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                    <a href="#" class="d-block text-center mb-4">
+                        <div class="product-list">
+                            <div class="product-image position-relative">
+                                <img src="{% static 'images/a2.jpg' %}" alt="products"
+                                     class="img-fluid product-image-first">
+                            </div>
+                            <div class="product-name pt-3">
+                                <h3 class="text-capitalize">Pet Accessories</h3>
+                                <button type="button" class="">Shop Now</button>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                    <a href="#" class="d-block text-center mb-4">
+                        <div class="product-list">
+                            <div class="product-image position-relative">
+                                <img src="{% static 'images/v1.jpg' %}" alt="products"
+                                     class="img-fluid product-image-first">
+                            </div>
+                            <div class="product-name pt-3">
+                                <h3 class="text-capitalize">Vet Appointment</h3>
+                                <button type="button" class="nav-link" href="{% url 'appointment' %}">Book Appointment</button>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Featured section -->
+            <section id="Featured" class="Featured">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="headline text-center mb-5">
+                                <h2 class="pb-3 position-relative d-inline-block">FEATURED PRODUCTS</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-4">
+                            <a href="#" class="d-block text-center mb-4">
+                                <div class="product-list">
+                                    <div class="product-image position-relative">
+                                        <span class="sale">Sale</span>
+                                        <img src="{% static 'images/a3.jpg' %}" alt="products"
+                                             class="img-fluid product-image-first">
+                                        <img src="{% static 'images/a4.jpeg' %}" alt="products"
+                                             class="img-fluid product-image-secondary">
+                                    </div>
+                                    <div class="product-name pt-3">
+                                        <h3 class="text-capitalize">Drools</h3>
+                                        <p class="mb-0 amount">Rs 4000
+                                            <del>Rs 5000</del>
+                                        </p>
+                                        <button type="button" class="add_to_Card">ADD TO CART</button>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-lg-4">
+                            <a href="#" class="d-block text-center mb-4">
+                                <div class="product-list">
+                                    <div class="product-image position-relative">
+                                        <img src="{% static 'images/f2.jpg' %}" alt="products"
+                                             class="img-fluid product-image-first">
+                                        <img src="{% static 'images/f3.jpg' %}" alt="products"
+                                             class="img-fluid product-image-secondary">
+                                    </div>
+                                    <div class="product-name pt-3">
+                                        <h3 class="text-capitalize">DogStcks</h3>
+                                        <p class="mb-0 amount">Rs 3000</p>
+                                        <button type="button" class="add_to_Card">ADD TO CART</button>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-lg-4">
+                            <a href="#" class="d-block text-center mb-4">
+                                <div class="product-list">
+                                    <div class="product-image position-relative">
+                                        <img src="{% static 'images/v3.jpg' %}" alt="products"
+                                             class="img-fluid product-image-first">
+                                        <img src="{% static 'images/v4.jpg' %}" alt="products"
+                                             class="img-fluid product-image-secondary">
+                                    </div>
+                                    <div class="product-name pt-3">
+                                        <h3 class="text-capitalize">Product 3</h3>
+                                        <p class="mb-0 amount">Rs 400</p>
+                                        <button type="button" class="add_to_Card">ADD TO CART</button>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Contact section -->
+                    <section id="contact">
+                        <div class="contact">
+                            <div class="container">
+                                <div class="mb-5 text-center">
+                                    <h5>Lets Start a Conversation!</h5>
+                                    <h2 class="fw-bold">Contact Us</h2>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-5 col-md-5">
+                                        <h4 class="fw-bold">Contact Info</h4>
+                                        <ul class="info list-unstyled">
+                                            <li class="d-flex align-items-center">
+                                                <span class="pe-3 ti-location-pin fs-5"></span>
+                                                <p><a href="">Leave a message for any queries.</a></p>
+                                            </li>
+                                            <li class="d-flex align-items-center">
+                                                <span class="pe-3 ti-mobile fs-5"></span>
+                                                <p><a href="">+977 9867059185</a></p>
+                                            </li>
+                                            <li class="d-flex align-items-center">
+                                                <span class="pe-3 ti-envelope fs-5"></span>
+                                                <p><a href="">ShakyaZ@info.np</a></p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-lg-7 col-md-7 pt-lg-0 pt-md-0 pt-4">
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="name"></label><input type="text"
+                                                                                         class="form-control"
+                                                                                         name="name" id="name"
+                                                                                         placeholder="Your name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="email"></label><input type="email"
+                                                                                          class="form-control"
+                                                                                          name="email" id="email"
+                                                                                          placeholder="Email address">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="message"></label><input class="textarea"
+                                                                                            name="message" cols="30"
+                                                                                            rows="4" id="message"
+                                                                                            placeholder="Enter your message">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <button class="btn btn-danger"><span
+                                                            class="ti-rocket pe-2 fs-5"></span> Send Message
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </div>
+    </section>
+{% endblock content %}
