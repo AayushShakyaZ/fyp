@@ -2,7 +2,7 @@
 {% load  static %}
 {% block content %}
     <!-- Home section -->
-    <section id="#" class="Home">
+    <section id="" class="Home">
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
@@ -67,7 +67,7 @@
                             </div>
                             <div class="product-name pt-3">
                                 <h3 class="text-capitalize">Dog Foods</h3>
-                                <button type="button" href="{% url 'products' %}">Shop Now</button>
+                                <a href="{% url 'products' %}" class="btn btn-success">Shop now</a>
                             </div>
                         </div>
                     </a>
@@ -81,7 +81,7 @@
                             </div>
                             <div class="product-name pt-3">
                                 <h3 class="text-capitalize">Pet Accessories</h3>
-                                <button type="button" class="">Shop Now</button>
+                                <a href="{% url 'products' %}" class="btn btn-success">View Now</a>
                             </div>
                         </div>
                     </a>
@@ -95,7 +95,7 @@
                             </div>
                             <div class="product-name pt-3">
                                 <h3 class="text-capitalize">Vet Appointment</h3>
-                                <button type="button" class="nav-link" href="{% url 'appointment' %}">Book Appointment</button>
+                                <a href="{% url 'appointment' %}" class="btn btn-success">Book Appointment</a>
                             </div>
                         </div>
                     </a>

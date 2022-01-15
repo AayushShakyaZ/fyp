@@ -36,8 +36,8 @@
 <section id="header">
     <nav class="navbar navbar-expand-lg bg-white fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="{% static 'images/logo.png' %}" class="d-block w-10" alt="">
+            <a class="navbar-brand" href="{% url 'Home' %}">
+                <img src="{% static 'images/logoo.png' %}" class="d-block w-10" alt="">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,7 +53,7 @@
                         <a class="nav-link" href="#Features">Featured</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{%  url 'appointment' %}">Appointment</a>
+                        <a class="nav-link" href="{% url 'appointment' %}">Appointment</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'products' %} ">Products</a>
@@ -67,14 +67,16 @@
         {#        if login #}
         {% if request.user.is_authenticated %}
             <span class="hello-msg">Hello,{{ request.user }}</span>
-            <span><a class="hello-msg" href="{% url 'logout' %}"> Logout</a>
+            <span><a class="btn btn-success" href="{% url 'logout' %}"> Logout</a>
             {#    else         #}
-            {% else %}
-            <span><a class="hello-msg" href="{% url 'login' %}" >Login</a></span>
-            <span><a class="hello-msg" href="{% url 'register' %}"> Register</a> </span>
+        {% else %}
+            <span><a class="btn btn-success" href="{% url 'login' %}">Login</a></span>
+            <span><a class="btn btn-success" href="{% url 'register' %}"> Register</a> </span>
         {% endif %}
+        </span>
     </nav>
 </section>
+
 {% block content %}{% endblock content %}
 <!-- Footer section -->
 <footer>

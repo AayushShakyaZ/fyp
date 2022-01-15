@@ -1,6 +1,44 @@
 {% extends 'base.html' %}
+
 {% load  static %}
 {% block content %}
     <div style="margin-top:100px"></div>
-    <h1>Appointment page</h1>
+    <h1>Appointment with Vet</h1>
+    {#        if login #}
+    {% if request.user.is_authenticated %}
+
+        <span class="hello-msg">Hello,{{ request.user }}. Book an appointment Now</span><br>
+        <table class="table">
+            <thead>
+            <tr>
+
+                <th scope="col">Name</th>
+                <th scope="col">Fees</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <div> {% for a in vet %}
+
+                <tr>
+
+                    <td>{{ a.firstname }} {{ a.lastname }}</td>
+                    <td>Rs. {{ a.fees }}</td>
+                    <td>
+                        <a class="btn btn-success" href="{% url 'appointment_form' a.username %}">Book Now</a>
+                    </td>
+                </tr>
+
+            {% endfor %}
+            </div>
+            </tbody>
+        </table>
+        <a class="btn btn-success" href="{% url 'view_appointment_history' %}"> View Appointment History</a>
+
+    {% else %}
+        <span><a class="hello-msg" href="{% url 'register' %}"> Register to continue...</a> </span>
+    {% endif %}
+    </span>
+
+
 {% endblock content %}
