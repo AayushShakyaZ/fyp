@@ -1,0 +1,130 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+
+}
+
+
+/* css for container */
+.container{
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(135deg, #71b7e6, #9b59b6) center;
+    background-size: cover;
+    position: absolute;
+
+
+}
+/* css for class from-box ,creating the empty box*/
+.form-box{
+    width: 380px;
+    height: 550px;
+    position: relative;
+    margin: 10% auto;
+    background: #fff;
+    padding: 5px;
+    overflow: hidden;
+
+}
+/* css for class button-box  */
+.button-box{
+    width: 220px;
+    margin: 35px auto;
+    position: relative;
+    box-shadow: 0 0 20px 9px #3905996c;
+    border-radius: 30px;
+}
+
+/* css for login and register button */
+.toggle-btn{
+    padding: 10px 30px;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    outline: none;
+    position: relative;
+}
+
+/* for making the login an register hover and animated */
+#btn{
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 110px;
+    height: 100%;
+    background: linear-gradient(to right,#4b49bb, #06ffde );
+    border-radius: 30px;
+    transition: .5s;
+}
+
+/* social icon  css */
+.social-icon{
+    margin: 30px auto;
+    text-align: center;
+}
+
+/* css for social media height and weidth */
+.social-icon img{
+    width: 30px;
+    margin: 0 12px;
+    cursor: pointer;
+}
+
+/* css  section for user name and passwor of login (input-group)  */
+.User-Pass-input-Group{
+    top: 180px;
+    position: absolute;
+    width: 280px;
+    transition: .5s;
+}
+
+
+/* css section of user and pass input-field */
+.input-field{
+    width: 100%;
+    padding: 10px 0;
+    margin: 5px 0;
+    border-left: 0;
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 1px solid #999;
+    outline: none;
+    background: transparent;
+}
+
+/* css for button submmit (that is login in button) */
+.submit-btn{
+    width: 85%;
+    padding:10px 30px;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    background: linear-gradient(to right,#4b49bb, #06ffde );
+    border: 0;
+    outline: none;
+    border-radius: 30px;
+}
+
+/* css for check box (that is remember pass section */
+.check-box{
+    margin: 30px 10px 30px 0;
+}
+/* css for inside of checkbos that is span */
+span{
+    color: #777;
+    font-size: 12px;
+    bottom: 68px;
+    position: absolute;
+}
+
+#login{
+    left: 50px;
+
+}
+/* till here its of login  */
+
+/* registration section start */
+#register{
+    left: 450px;
+}

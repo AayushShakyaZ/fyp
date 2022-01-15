@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div style="margin-top: 100px">You have Successfully Booked an Appointment. {{ vet_obj.first_name }}</div>
+
+<a class="btn btn-success" href="{% url 'view_appointment_history' %}">View your appointments</a>
+{% endblock content %}

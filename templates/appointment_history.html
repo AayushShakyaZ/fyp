@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <div style="margin-top: 100px">
+        <h1> history of appointment </h1>
+        <table class="table">
+            <thead>
+            <tr>
+
+                <th scope="col">Vet Name</th>
+                <th scope="col">Appointment Date </th>
+                <th scope="col">Fees</th>
+                <th scope="col">vet email</th>
+                <th scope="col">appointment crated date</th>
+                <th scope="col">Appointment Status</th>
+                <th scope="col">Payment Status</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <div> {% for a in appointment %}
+
+                <tr>
+
+                    <td>{{ a.vet_username.firstname }} {{ a.vet_username.lastname }}</td>
+                    <td>{{ a.appointment_date }}</td>
+                    <td>{{ a.vet_username.fees }}</td>
+                    <td>{{ a.vet_username.email }}</td>
+                    <td>{{ a.appointment_created_date}}</td>
+                    <td>{{ a.appointment_status}}</td>
+                    <td>{%  if not a.payment_status %}
+                        <a class="btn btn-danger">Pay</a>
+                    {% else %}
+                        <div style="color: green">Paid!!</div>
+                   {% endif %} </td>
+
+
+
+                </tr>
+
+            {% endfor %}
+            </div>
+            </tbody>
+        </table>
+
+    </div>
+{% endblock content %}

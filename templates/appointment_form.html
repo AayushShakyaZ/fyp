@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="container" style="margin-top: 100px;">
+
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-6">
+                {% for vet in vet %}
+                    <form action="{% url 'appointment_form' vet.username %}" method="post">
+                {% endfor %}
+                {% csrf_token %}
+                {% for usr in user %}
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Email address</label>
+                        <input type="email" class="form-control" disabled id="exampleInputEmail1" name="usr_email"
+                               value="{{ usr.email }}"
+                               aria-describedby="emailHelp">
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Date and time</label>
+                        <input type="datetime-local" class="form-control" id="exampleInputEmail1" name="datetime"
+                               aria-describedby="emailHelp">
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">user email</label>
+                        <input type="email" class="form-control" disabled id="exampleInputEmail1" name="usr_email"
+                               value="{{ usr.email }}"
+                               aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">name</label>
+                        <input type="email" class="form-control" disabled id="exampleInputEmail1" name="usr_name"
+                               value="{{ usr.first_name }} {{ usr.last_name }}" aria-describedby="emailHelp">
+                    </div>
+                {% endfor %}
+                {% for vet in vet %}
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">vet name</label>
+                        <input type="email" class="form-control" disabled id="exampleInputEmail1" name="vet_name"
+                               value="{{ vet.firstname }} {{ vet.lastname }}"
+                               aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">total cost</label>
+                        <input type="email" class="form-control" disabled id="exampleInputEmail1" name="vet_name"
+                               value="{{ vet.fees }} "
+                               aria-describedby="emailHelp">
+                    </div>
+                {% endfor %}
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </div>
+
+{% endblock content %}
