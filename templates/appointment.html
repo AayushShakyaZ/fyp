@@ -36,7 +36,7 @@
         <a class="btn btn-success" href="{% url 'view_appointment_history' %}"> View Appointment History</a>
 
     {% else %}
-        <span><a class="hello-msg" href="{% url 'register' %}"> Register to continue...</a> </span>
+        <span><a class="hello-msg" href="{% url 'register' %}"> You must log in before booking an appointment!</a> </span>
     {% endif %}
     </span>
 

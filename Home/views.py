@@ -7,7 +7,7 @@ from django.contrib import messages
 from .forms import CreateUserForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from .models import Vet, Appointment
+from .models import *
 
 
 def registerPage(request):
@@ -53,7 +53,7 @@ def home(request):
 
 
 def products(request):
-    return render(request, 'product.html')
+    return render(request, 'store.html')
 
 
 def appointment(request):
@@ -101,6 +101,21 @@ def appointment_form(request, username):
 def appointment_history(request):
     username = request.user.username
     appointment = Appointment.objects.all().filter(user_username=request.user)
-    content= {'appointment': appointment}
+    content = {'appointment': appointment}
     return render(request, 'appointment_history.html', content)
 
+
+def store(request):
+    prods = Product.objects.all()
+    context = {'prods': prods}
+    return render(request, 'store.html', context)
+
+
+def cart(request):
+    context = {}
+    return render(request, 'cart.html', context)
+
+
+def checkout(request):
+    context = {}
+    return render(request, 'checkout.html', context)
