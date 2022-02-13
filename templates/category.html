@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load  static %}
+{% block content %}
+    <div style="margin-top:100px"></div>
+    <div class="container">
+        <h3> Categories</h3><hr>
+    {% for c in categories %}
+        <h4>{{ c.title }}</h4>
+        <div class="row">
+        {%  for product in c.product_set.all %}
+        <div class="col-lg-4">
+            <img class="thumbnail" src="{{ product.image.url }}" alt="">
+            <div class="box-element product">
+                <h6><strong>{{ product.title }}</strong></h6>
+                <hr>
+
+                <button class="btn btn-outline-secondary add-btn">Add to Cart</button>
+                <h4 style="display: inline-block; float: right"><strong>Rs{{ product.price|floatformat:2 }}</strong></h4>
+
+            </div>
+        </div>
+    {% endfor %}
+
+    </div>
+    {% endfor %}
+    </div>
+
+{% endblock content %}
