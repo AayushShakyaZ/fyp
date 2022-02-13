@@ -94,7 +94,7 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .col-lg-4, .col-lg-6, .col-lg-8, .col-lg-12{
-	margin-top: 10px;
+	margin-top: 40px;
 }
 
 .btn{
@@ -102,7 +102,7 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .row-image{
-	width: 100px;
+	width: 10px;
 }
 
 .form-field{
@@ -113,7 +113,7 @@ h1,h2,h3,h4,h5,h6{
 
 .cart-row{
 	display: flex;
-    align-items: flex-end;
+    align-items: flex-start;
     padding-bottom: 10px;
     margin-bottom: 10px;
     border-bottom: 1px solid #ececec;
