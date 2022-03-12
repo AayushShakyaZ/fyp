@@ -3,42 +3,37 @@
 {% load  static %}
 {% block content %}
     <div style="margin-top:100px"></div>
-    <h1>Appointment with Vet</h1>
-    {#        if login #}
-    {% if request.user.is_authenticated %}
-
-        <span class="hello-msg">Hello,{{ request.user }}. Book an appointment Now</span><br>
-        <table class="table">
-            <thead>
-            <tr>
-
-                <th scope="col">Name</th>
-                <th scope="col">Fees</th>
-                <th scope="col"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <div> {% for a in vet %}
-
+    <div class="container">
+        {#        if login #}
+        {% if request.user.is_authenticated %}
+            <table class="table">
+                <thead>
                 <tr>
-
-                    <td>{{ a.firstname }} {{ a.lastname }}</td>
-                    <td>Rs. {{ a.fees }}</td>
-                    <td>
-                        <a class="btn btn-success" href="{% url 'appointment_form' a.username %}">Book Now</a>
-                    </td>
+                    <th scope="col">Name</th>
+                    <th scope="col">Fees</th>
+                    <th scope="col"></th>
                 </tr>
+                </thead>
+                <tbody>
+                <div> {% for a in vet %}
+                    <tr>
+                        <td>{{ a.firstname }} {{ a.lastname }}</td>
+                        <td>Rs. {{ a.fees }}</td>
+                        <td>
+                            <a class="btn btn-success" href="{% url 'appointment_form' a.username %}">Book Now</a>
+                        </td>
+                    </tr>
 
-            {% endfor %}
+                {% endfor %}
+                </div>
+                </tbody>
+            </table>
+            <div class="headline text-center mb-5">
+            <a class="btn btn-success" href="{% url 'view_appointment_history' %}"> View Appointment History</a>
             </div>
-            </tbody>
-        </table>
-        <a class="btn btn-success" href="{% url 'view_appointment_history' %}"> View Appointment History</a>
-
-    {% else %}
-        <span><a class="hello-msg" href="{% url 'register' %}"> You must log in before booking an appointment!</a> </span>
-    {% endif %}
-    </span>
-
-
+        {% else %}
+            <span><a class="hello-msg" href="{% url 'register' %}"> You must log in before booking an appointment!</a> </span>
+        {% endif %}
+    </div>
+    <div style="margin-top:200px"></div>
 {% endblock content %}

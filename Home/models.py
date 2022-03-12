@@ -63,11 +63,17 @@ class Product(models.Model):
         return self.title
 
 
+METHOD = {
+    ("Khalti", "Khalti"),
+}
+
+
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
     date_ordered = models.DateTimeField(auto_now=True)
     complete = models.BooleanField(default=False, null=True, blank=False)
     transaction_id = models.CharField(max_length=200, null=True)
+    payment_method = models.CharField(max_length=20, default=False, choices=METHOD)
 
     def __str__(self):
         return str(self.id)

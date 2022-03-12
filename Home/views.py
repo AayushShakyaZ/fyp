@@ -1,17 +1,16 @@
 import datetime
-from math import ulp
+import json
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from django.contrib import messages
 # Create your views here.
 from django.views import View
+from django.views.generic import TemplateView
 
 from .forms import CreateUserForm
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
 from .models import *
-from django.views.generic import TemplateView
-import json
+import requests
 
 
 def registerPage(request):
@@ -43,8 +42,8 @@ def loginPage(request):
         else:
             messages.info(request, 'Username or Password is Incorrect')
 
-    context = {}
-    return render(request, 'loginn.html', context)
+    content = {}
+    return render(request, 'loginn.html', content)
 
 
 def logoutUser(request):
@@ -53,14 +52,32 @@ def logoutUser(request):
 
 
 def home(request):
-    return render(request, 'index.html')
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping': False}
+        cartItems = order['get_cart_items']
+    context = {'items': items, 'order': order, 'cartItems': cartItems}
+    return render(request, 'index.html', context)
 
 
 def appointment(request):
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping': False}
+        cartItems = order['get_cart_items']
+
     vet = Vet.objects.all().filter(is_active=True)
-    content = {
-        "vet": vet
-    }
+    content = {"vet": vet, 'items': items, 'order': order, 'cartItems': cartItems}
     return render(request, 'appointment.html', content)
 
 
@@ -213,7 +230,41 @@ class CategoryView(TemplateView):
 
 class EsewaRequestView(View):
     def get(self, request, *args, **kwargs):
-        content = {
+        o_id = request.GET.get("o_id")
+        order = Order.objects.get(id=o_id)
+        context = {
+            "order": order
 
         }
-        return render(request, "esewarequest.html", content)
+        return render(request, "esewarequest.html", context)
+
+
+class KhaltiVerifyView(View):
+    def get(self, request, *args, **kwargs):
+        token = request.GET.get("token")
+        amount = request.GET.get("amount")
+        order_id = request.GET.get("order_id")
+        print(token, amount, order_id)
+        url = "https://khalti.com/api/v2/payment/verify/"
+        payload = {
+            "token": token,
+            "amount": amount
+        }
+        headers = {
+            "Authorization": "Key test_secret_key_8c4cfb23356643eeb94bb760f499b894"
+        }
+        order_obj = Order.objects.get(transaction_id=order_id)
+
+        response = requests.post(url, payload, headers=headers)
+        resp_dict = response.json()
+        if resp_dict.get("idx"):
+            success = True
+            order_obj.payment_completed = True
+            order_obj.save()
+        else:
+            success = False
+        data = {
+            "success": success
+        }
+
+        return JsonResponse(data)

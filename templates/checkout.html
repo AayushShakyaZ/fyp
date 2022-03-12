@@ -1,126 +1,209 @@
 {% extends 'base.html' %}
-{% load  static %}
+{% load static %}
 {% block content %}
     <div style="margin-top:100px"></div>
-    <h1>checkout page</h1>
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="box-element" id="form-wrapper">
-                <form id="form">
-                    {% csrf_token %}
-                    <div id="user-info">
-                        <div class="form-field">
-                            <label>
-                                <input required class="form-control" type="text" name="name" placeholder="Name..">
-                            </label>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="box-element" id="form-wrapper">
+                    <form id="form">
+                        <div id="user-info">
+                            <div class="form-field">
+                                <label>
+                                    <input required class="form-control" type="text" name="name" placeholder="Name..">
+                                </label>
+                            </div>
+                            <div class="form-field">
+                                <label>
+                                    <input required class="form-control" type="email" name="email"
+                                           placeholder="Email..">
+                                </label>
+                            </div>
                         </div>
-                        <div class="form-field">
-                            <label>
-                                <input required class="form-control" type="email" name="email" placeholder="Email..">
-                            </label>
-                        </div>
-                    </div>
 
-                    <div id="shipping-info">
+                        <div id="shipping-info">
+                            <hr>
+                            <p>Shipping Information:</p>
+                            <hr>
+                            <div class="form-field">
+                                <label>
+                                    <input class="form-control" type="text" name="address" placeholder="Address..">
+                                </label>
+                            </div>
+                            <div class="form-field">
+                                <label>
+                                    <input class="form-control" type="text" name="city" placeholder="City..">
+                                </label>
+                            </div>
+                        </div>
+
                         <hr>
-                        <p>Shipping Information:</p>
-                        <hr>
-                        <div class="form-field">
-                            <label>
-                                <input class="form-control" type="text" name="address" placeholder="Address..">
-                            </label>
-                        </div>
-                        <div class="form-field">
-                            <label>
-                                <input class="form-control" type="text" name="city" placeholder="City..">
-                            </label>
-                        </div>
-
-                    </div>
-                    <hr>
-                    <input id="form-button" class="btn btn-success btn-block" type="submit" value="Continue">
-                </form>
-            </div>
-            <br>
-            <div class="box-element hidden" id="payment-info">
-                <small>Esewa Payment</small>
-                <span><a id="make-payment" class="btn btn-success" href="{% url 'esewa-rqst' %}">Pay</a></span>
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="box-element">
-                <a class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
-                <hr>
-                <h3>Order Summary</h3>
-                <hr>
-                <div class="cart-row">
-                    <div style="flex:2"><img class="row-image" src="{{ item.product.imageURL }}" alt=""></div>
-                    <div style="flex:2"><p>{{ item.product.title }}</p></div>
-                    <div style="flex:1"><p>{{ item.product.price }}</p></div>
-                    <div style="flex:1"><p>{{ item.quantity }}</p></div>
+                        <input id="form-button" class="btn btn-success btn-block" type="submit" value="Continue">
+                    </form>
                 </div>
-                <h5>Items: {{ order.get_cart_items }}</h5>
-                <h5>Total: Rs. {{ order.get_cart_total|floatformat:2 }}</h5>
+
+                <br>
+                <div class="box-element hidden" id="payment-info">
+                    <small>Payment Options</small>
+                    <button id="payment-button">Pay with Khalti</button>
+                   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+                    <script>
+                        var config = {
+                            // replace the publicKey with yours
+                            "publicKey": "test_public_key_db95f998882244e39e54ddbeebd08a78",
+                            "productIdentity": "order_{{order.transaction_id }}",
+                            "productName": "Dragon",
+                            "productUrl": "http://localhost:8000",
+                            "paymentPreference": [
+                                "KHALTI",
+                                "EBANKING",
+                                "MOBILE_BANKING",
+                                "CONNECT_IPS",
+                                "SCT",
+                            ],
+                            "eventHandler": {
+                                onSuccess(payload) {
+                                    // hit merchant api for initiating verfication
+                                    axios.get("/khaltiverify/",{
+                                        params:{
+                                            "token": payload.token,
+                                            "amount": payload.amount,
+                                            "order_id": "{{ order.transaction_id }}"
+                                        }
+                                        }
+                                    ).then(function (resp)
+                                    {
+                                       if (resp.data.success === true){
+                                           alert("Your payment was successful!!")
+                                           location.href = "{% url 'Home' %}"
+                                       }
+                                       else {
+                                           alert("Sorry. An error occured during transaction.")
+                                           location.href = "{{ request.build_absolute_uri }}"
+                                       }
+                                    })
+
+                                },
+                                onError(error) {
+                                    console.log(error);
+                                },
+                                onClose() {
+                                    console.log('widget is closing');
+                                }
+                            }
+                        };
+
+                        var checkout = new KhaltiCheckout(config);
+                        var btn = document.getElementById("payment-button");
+                        btn.onclick = function () {
+                            // minimum transaction amount must be 10, i.e 1000 in paisa.
+                            checkout.show({amount: {{order.get_cart_total}}});
+                        }
+                    </script>
+                </div>
+
+            </div>
+
+            <div class="col-lg-6">
+                <div class="box-element">
+                    <a class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
+                    <hr>
+                    <h3>Order Summary</h3>
+                    <hr>
+                    {% for item in items %}
+                        <div class="cart-row">
+                            <div style="flex:2"><img class="row-image" src="{{ item.product.imageURL }}" alt=""></div>
+                            <div style="flex:2"><p>{{ item.product.name }}</p></div>
+                            <div style="flex:1"><p>Rs. {{ item.product.price|floatformat:2 }}</p></div>
+                            <div style="flex:1"><p>x{{ item.quantity }}</p></div>
+                        </div>
+                    {% endfor %}
+                    <h5>Items: {{ order.get_cart_items }}</h5>
+                    <h5>Total: Rs. {{ order.get_cart_total|floatformat:2 }}</h5>
+                </div>
             </div>
         </div>
-    </div>
+        <script type="text/javascript">
+            var shipping = '{{order.shipping}}'
 
-    <script type="text/javascript">
-        let shipping = '{{order.shipping}}'
-        let total = '{{ order.get_cart_total }}'
-
-
-        if (shipping === 'False') {
-            document.getElementById('shipping-info').innerHTML = ''
-        }
-
-        let form = document.getElementById('form')
-
-        csrftoken = form.getElementsByTagName("input")[0].value
-        console.log('Token', form.getElementsByTagName("input")[0].value)
-        form.addEventListener('submit', function (e) {
-            e.preventDefault()
-            console.log('Form Submitted')
-            document.getElementById('form-button').classList.add("hidden");
-            document.getElementById('payment-info').classList.remove("hidden");
-        })
-        document.getElementById('make-payment').addEventListener('click', function (e) {
-            submitFormData()
-        })
-
-        function submitFormData() {
-            console.log('Payment Button')
-            let userFormData = {
-                'name': null,
-                'email': null,
-                'total': total,
-
+            if (shipping === 'False') {
+                document.getElementById('shipping-info').innerHTML = ''
             }
-            let shippingInfo = {
-                'address': null,
-                'city': null,
+
+
+            if (shipping === 'False' && user !== 'AnonymousUser') {
+                //Hide entire form if user is logged in and shipping is false
+                document.getElementById('form-wrapper').classList.add("hidden");
+                //Show payment if logged in user wants to buy an item that does not require shipping
+                document.getElementById('payment-info').classList.remove("hidden");
             }
-            if (shipping !== 'False') {
-                shippingInfo.address = form.address.value
-                shippingInfo.address = form.city.value
-            }
-            let url = '/process_order/'
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken,
-                },
-                body: JSON.stringify({'form': userFormData, 'shipping': shippingInfo})
+
+            var form = document.getElementById('form')
+            form.addEventListener('submit', function (e) {
+                e.preventDefault()
+                console.log('Form Submitted...')
+                document.getElementById('form-button').classList.add("hidden");
+                document.getElementById('payment-info').classList.remove("hidden");
             })
-                .then((response) => response.json())
-                .then((data) => {
-                    console.log('Success:', data);
-                    alert('Transaction Successful');
-                    window.location.href = "{% url 'store' %}"
-                })
 
-        }
-    </script>
+            /*
+            document.getElementById('make-payment').addEventListener('click', function(e){
+                submitFormData()
+            })
+            */
+
+            function submitFormData() {
+                console.log('Payment button clicked')
+
+                var userFormData = {
+                    'name': null,
+                    'email': null,
+                    'total': total,
+                }
+
+                var shippingInfo = {
+                    'address': null,
+                    'city': null,
+                    'state': null,
+                    'zipcode': null,
+                }
+
+                if (shipping !== 'False') {
+                    shippingInfo.address = form.address.value
+                    shippingInfo.city = form.city.value
+
+                }
+
+                if (user === 'AnonymousUser') {
+                    userFormData.name = form.name.value
+                    userFormData.email = form.email.value
+                }
+
+                console.log('Shipping Info:', shippingInfo)
+                console.log('User Info:', userFormData)
+
+                var url = "/process_order/"
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'applicaiton/json',
+                        'X-CSRFToken': csrftoken,
+                    },
+                    body: JSON.stringify({'form': userFormData, 'shipping': shippingInfo}),
+
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log('Success:', data);
+                        alert('Transaction completed');
+
+                        cart = {}
+                        document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+
+                        window.location.href = "{% url 'store' %}"
+
+                    })
+            }
+        </script>
+    </div>
 {% endblock content %}

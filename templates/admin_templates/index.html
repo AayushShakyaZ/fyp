@@ -1,0 +1,45 @@
+{% extends "admin_templates/adminbase.html" %}
+
+{% block admincontent %}
+    {% if user.is_authenticated %}
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Dashboard</h1>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        <div class="text-center">View all products added this week</div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for product in product %}
+                                <tr>
+                                    <td>{{ product.title }}</td>
+                                    <td> {{ product.category }}</td>
+                                    <td>{{ product.price }}</td>
+                                    <td>{{ product.quantity }}</td>
+
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    {% else %}
+        <div> Please login for further process</div>
+    {% endif %}
+
+{% endblock admincontent %}

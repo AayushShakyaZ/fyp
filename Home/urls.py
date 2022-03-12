@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import CategoryView, EsewaRequestView
+from .views import CategoryView, EsewaRequestView, KhaltiVerifyView
 
 urlpatterns = [
     path('register/', views.registerPage, name="register"),
@@ -18,5 +18,7 @@ urlpatterns = [
     path('process_order/', views.processOrder, name='process_order'),
     path("category/", CategoryView.as_view(), name="category"),
     path("esewa-rqst/", EsewaRequestView.as_view(), name="esewa-rqst"),
+    path("khaltiverify/", KhaltiVerifyView.as_view(), name="khaltiverify"),
+
 
 ]
